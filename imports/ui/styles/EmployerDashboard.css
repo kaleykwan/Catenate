@@ -1,0 +1,4 @@
+.create-posting-form {
+    display: flex;
+    flex-flow: column;
+}

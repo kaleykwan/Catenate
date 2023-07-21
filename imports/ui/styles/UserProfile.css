@@ -1,0 +1,11 @@
+.profile-header {
+  display: flex;
+  flex-flow: column;
+  background-color: #47454a47;
+  border-radius: 7px;
+  margin: 15px;
+  margin-left: 0px;
+  width: 60vw;
+  height: 55vh;
+  padding-top: 15px;
+}

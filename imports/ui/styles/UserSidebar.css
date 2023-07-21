@@ -1,0 +1,37 @@
+.left-side-bar {
+  display: flex;
+  flex-flow: column;
+  padding: 15px;
+  padding-top: 0px;
+  gap: 12px;
+  height: 100vh;
+  width: 18vw;
+  margin-top: 15px;
+}
+
+.left-sidebar-nav {
+  display: flex;
+  flex-flow: column;
+  background-color: #ffffff;
+  padding: 30px;
+  padding-top: 25px;
+  border-radius: 7px;
+  gap: 15px;
+}
+
+.profile-thumbnail {
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.access-button {
+  background: #670dc2;
+  padding: 10px;
+  border-radius: 7px;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  border: none;
+}

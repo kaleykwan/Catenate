@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Meteor } from "meteor/meteor";
+import { LogOut } from "./LogOut";
 
 export const EmployerDashboard = () => {
   const [positionName, setPositionName] = useState<string>("");
@@ -18,6 +19,10 @@ export const EmployerDashboard = () => {
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     createPosting();
+    setPositionName("");
+    setLocation("");
+    setDescription("");
+    setCompensation(0);
   };
 
   const createPosting = () => {
@@ -40,12 +45,14 @@ export const EmployerDashboard = () => {
             label="Position Name"
             variant="outlined"
             onChange={(e) => setPositionName(e.target.value)}
+            value={positionName}
           />
           <TextField
             id="outlined-basic"
             label="Location"
             variant="outlined"
             onChange={(e) => setLocation(e.target.value)}
+            value={location}
           />
           <TextField
             id="outlined-basic"
@@ -54,6 +61,7 @@ export const EmployerDashboard = () => {
             multiline
             minRows={3}
             onChange={(e) => setDescription(e.target.value)}
+            value={description}
           />
           <FormControl>
             <Input
@@ -62,6 +70,7 @@ export const EmployerDashboard = () => {
                 <InputAdornment position="start">$</InputAdornment>
               }
               onChange={(e) => setCompensation(Number(e.target.value))}
+              value={compensation}
             />
             <FormHelperText id="standard-weight-helper-text">
               Compensation for position
@@ -72,6 +81,7 @@ export const EmployerDashboard = () => {
           </button>
         </form>
       </div>
+      <LogOut />
     </div>
   );
 };

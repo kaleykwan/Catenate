@@ -18,12 +18,10 @@ export const UserSidebar = () => {
   }, []);
 
   let userProfile;
-  console.log(Meteor.user()?.username);
+  const username = Meteor.user()?.username;
+  console.log("username again: " + username);
 
   if (Meteor.user()?.username) {
-    const username = Meteor.user()?.username;
-    console.log("username again: " + username);
-
     userProfile = Meteor.call("user-profile.getProfile", {
       username: username,
     });
@@ -47,7 +45,7 @@ export const UserSidebar = () => {
             fontWeight: 400,
           }}
         >
-          @kaley
+          @{username}
         </p>
       </div>
       <div className="left-sidebar-nav">
@@ -81,8 +79,7 @@ export const UserSidebar = () => {
           Profile
         </p>
       </div>
-      <button className="access-button" onClick={() => navigate(RoutePaths.USER_SIGNUP)}>Sign Up</button>
-      <button className="access-button" onClick={() => navigate(RoutePaths.USER_SIGNIN)}>Sign In</button>
+      <LogOut />
     </div>
   );
 };

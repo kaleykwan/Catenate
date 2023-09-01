@@ -2,10 +2,9 @@
   display: flex;
   flex-flow: column;
   padding: 15px;
-  padding-top: 0px;
-  gap: 12px;
-  height: 100vh;
+  gap: 20px;
   width: 18vw;
+  height: 94.2vh;
   margin-top: 15px;
 }
 
@@ -21,8 +20,11 @@
 
 .profile-thumbnail {
   background-color: #ffffff;
-  padding: 10px;
+  padding: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   border-radius: 7px;
+  gap: 15px;
 }
 
 .access-button {

@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { RoutePaths } from "../routes/RoutePaths";
 import { Meteor } from "meteor/meteor";
 
-export const UserSignUp = () => {
+export const EmployerSignUp = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleSignUp = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -33,20 +33,29 @@ export const UserSignUp = () => {
       }
     );
 
-    Meteor.call("user-profile.createNewProfile", {
+    Accounts.onCreateUser((options, user) => {
+      
+      if (options.profile) {
+        user.profile = options.profile;
+      }
+      
+      return user
+    })
+
+    Meteor.call("employer-profile.createNewProfile", {
       username: username,
       name: name,
-      type: "user",
+      type: "employer"
     });
 
-    console.log("created user profile");
+    console.log("created employer profile");
 
     setName("");
     setUsername("");
     setEmail("");
     setPassword("");
     console.log("submitted!");
-    navigate(RoutePaths.USER_HOME);
+    navigate(RoutePaths.EMPLOYER_HOME);
   };
 
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { UserSidebar } from "../components/UserSidebar";
-import { DashboardFeed } from "../components/DashboardFeed";
+import { UserDashboard } from "../components/UserDashboard";
 import { Meteor } from "meteor/meteor";
 
 export const UserHome = () => {
@@ -16,7 +16,7 @@ export const UserHome = () => {
   return (
     <div className="user-home">
       <UserSidebar />
-      <DashboardFeed />
+      <UserDashboard />
     </div>
   );
 };

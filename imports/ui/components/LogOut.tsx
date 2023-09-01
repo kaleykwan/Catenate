@@ -7,7 +7,7 @@ export const LogOut = () => {
   const navigate = useNavigate();
   const logOut = () => {
     Meteor.logout();
-    navigate(RoutePaths.SIGNIN);
+    navigate(RoutePaths.WELCOME_PAGE);
   };
   return (
     <button className="access-button" onClick={logOut}>

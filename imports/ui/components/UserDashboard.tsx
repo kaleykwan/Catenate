@@ -1,37 +1,50 @@
 import React, { useState } from "react";
 import { useSubscribe, useFind } from "meteor/react-meteor-data";
 import { useNavigate } from "react-router-dom";
-import { PostingCollection } from "../../api/Collections";
+import {
+  ApplicationCollection,
+  PostingCollection,
+} from "../../api/Collections";
 import { RoutePaths } from "../routes/RoutePaths";
+import Fuse from "fuse.js";
+import { Meteor } from "meteor/meteor";
 
-export const DashboardFeed = () => {
+export const UserDashboard = () => {
   const navigate = useNavigate();
   const isLoadingPosts = useSubscribe("allPostings");
-  const [open, setOpen] = useState(false);
+  const isLoadingApplications = useSubscribe("allApplications");
+  const username = Meteor.user()?.username;
+  console.log(username);
   const allPostings = useFind(() =>
     PostingCollection.find({}, { sort: { createdAt: -1 } })
   );
 
-  const handleOpen = () => {
-    setOpen(!open);
+  if (isLoadingPosts()) {
+    console.log("loading...");
+  } else {
+  }
+  console.log(allPostings);
+
+  const currentApplications = useFind(() =>
+    ApplicationCollection.find({username: username}, { sort: { createdAt: -1 } })
+  );
+
+  console.log(currentApplications);
+
+  const fuseOptions = {
+    isCaseSensitive: false,
+    keys: ["title", "companyName"],
   };
 
-  const currentPostings = [
-    {
-      title: "Graphics Software Intern",
-      companyName: "Intel",
-      location: "remote",
-      pay: "36/hr",
-      status: "Pending",
-    },
-    {
-      title: "Backend Engineer Intern",
-      companyName: "Somewhere Somehow",
-      location: "New York, NY",
-      pay: "20/hr",
-      status: "Accepted",
-    },
-  ];
+  const fuse = new Fuse(allPostings, fuseOptions);
+  let searchResults;
+
+  const handleSearchInput = (e: any) => {
+    const searchInput = e.target.value;
+    console.log(searchInput);
+    searchResults = fuse.search(searchInput);
+    console.log(searchResults);
+  };
 
   return (
     <div className="dashboard-feed">
@@ -44,25 +57,25 @@ export const DashboardFeed = () => {
             paddingTop: 15,
           }}
         >
-          Welcome back! Here are your applications:
+          Welcome back! Here are your current applications:
         </p>
         <div className="current-posts">
-          {currentPostings.map((posting) => {
+          {currentApplications.map((application) => {
             return (
               <div className="current-post">
                 {/* image */}
                 <div className="current-post-info">
                   <p style={{ fontWeight: 600, fontSize: 18 }}>
-                    {posting.title}
+                    {application.name}
                   </p>
                   <p style={{ fontWeight: 500, fontSize: 16 }}>
-                    {posting.companyName}
+                    {application.company}
                   </p>
                   <p style={{ fontWeight: 400, fontSize: 14 }}>
-                    {posting.location}
+                    {application.location}
                   </p>
                   <p style={{ fontWeight: 400, fontSize: 15 }}>
-                    ${posting.pay}
+                    ${application.pay}
                   </p>
                 </div>
                 <div className="current-post-footer">
@@ -83,7 +96,7 @@ export const DashboardFeed = () => {
                         backgroundColor: "#670dc2",
                       }}
                     >
-                      {posting.status}
+                      {application.status}
                     </button>
                   </div>
                 </div>
@@ -93,10 +106,13 @@ export const DashboardFeed = () => {
         </div>
       </div>
       <div className="dashboard-recommended">
-        <input
-          className="dashboard-search-bar"
-          placeholder="Search all open positions"
-        />
+        <div className="dashboard-searchbar-div">
+          <input
+            className="dashboard-search-bar"
+            placeholder="Search all open positions"
+            onChange={(e) => handleSearchInput(e)}
+          />
+        </div>
         <div className="feed-posts">
           {allPostings.map((posting) => {
             return (
@@ -112,7 +128,9 @@ export const DashboardFeed = () => {
                   <p style={{ fontWeight: 400, fontSize: 14 }}>
                     {posting.location}
                   </p>
-                  <p style={{ fontWeight: 400, fontSize: 15 }}>${posting.pay}/hr</p>
+                  <p style={{ fontWeight: 400, fontSize: 15 }}>
+                    ${posting.pay}/hr
+                  </p>
                 </div>
                 <div>
                   <button

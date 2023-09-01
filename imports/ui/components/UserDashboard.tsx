@@ -20,7 +20,6 @@ export const UserDashboard = () => {
   );
 
   if (isLoadingPosts()) {
-    console.log("loading...");
   } else {
   }
   console.log(allPostings);

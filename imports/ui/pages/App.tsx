@@ -60,10 +60,6 @@ export const App = () => {
             path={RoutePaths.EMPLOYER_SIGNUP}
             element={<EmployerSignUp />}
           />
-          <Route path={RoutePaths.USER_HOME} element={<UserHome />} />
-          <Route path={RoutePaths.USER_PROFILE} element={<UserProfile />} />
-          <Route path={RoutePaths.EMPLOYER_HOME} element={<EmployerHome />} />
-          <Route path="/position/:postingId" element={<UserPosting />} />
           <Route path={RoutePaths.USER_HOME} element={<EmployerDashboard />} />
         </Routes>
       </div>
